@@ -44,7 +44,7 @@ Furthermore, generic tools fail to answer critical dining questions:
 ## Demo
 
 - **GitHub Repository**: [https://github.com/rajukanna/SwadLipi.git](https://github.com/rajukanna/SwadLipi.git)
-- **Live Cloud AI Runtime**: Deployed via Render Blueprint (`render.yaml` & Dockerfile ready for 1-click cloud deployment)
+- **Live Cloud AI Runtime**: Deployed via Render(https://swadlipi.onrender.com/)
 - **Interactive UI Preview**:
   - **Left Rail**: Navigation, Menu Explorer, Scan Menu OCR, Ask Maharaj AI, Dietary Profile, Render AI Runtime Status.
   - **Center Workspace**: Vernacular search bar, language selector, category tabs (*Meals*, *Sides*, *Snacks*, *Desserts*, *Beverages*), regional cuisine chips (*Punjab*, *Udupi*, *Hyderabad*, *Street Food*), and circular food photography cards.
