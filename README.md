@@ -76,20 +76,8 @@ The repository includes:
 
 ## How I Built It
 
-### Architecture & Tech Stack
+### Tech Stack
 
-```mermaid
-graph TD
-    User([Diner / Restaurant Tourist]) <--> DesktopUI[Desktop Web Interface<br>Yummies UI Template Adapted]
-    DesktopUI <--> SpeechAPI[Web Speech API<br>Indian Accent Audio Engine]
-    DesktopUI <--> RenderRuntime[Render.com Cloud AI Runtime<br>Node.js & Express / Docker]
-    
-    subgraph AI Runtime on Render
-        RenderRuntime --> DeepEngine[Local Indian Culinary Engine<br>Cultural Rules, Spice Matrix, Jain/Halal Checks]
-        RenderRuntime --> GenAI[Gemini 2.0 / Open LLM Interface<br>Dynamic Menu Translations & Maharaj Chat]
-        RenderRuntime --> HealthProbe[/healthz Probes<br>Zero-Downtime Render Monitoring]
-    end
-```
 
 1. **Frontend & Desktop Design System**:
    - Built with Vanilla HTML5, CSS3, and JavaScript for zero build overhead, instant startup, and native performance.
@@ -141,9 +129,3 @@ During development, we tested the prototype with:
 - **Rohan (Local Cafe Owner in North Goa)**: Expressed willingness to subscribe to a ₹1,200/month QR-code digital version of SwadLipi so Russian, British, and domestic tourists can order Goan fish curries, xacuti, and local thalis without calling the waiter 5 times to explain the ingredients.
 
 ---
-
-## Prize Categories
-
-- **Side Hustle Track**: A viable, high-margin B2B SaaS and digital QR menu service for the hundreds of thousands of tourist-facing Indian restaurants and dhabas.
-- **Best Agentic Frontend / Desktop App**: Fully interactive 3-pane desktop application faithfully adapting the Yummies template with conversational AI and speech pronunciation.
-- **Best Use of Open AI Runtime on Render**: Native Render deployment utilizing `render.yaml` blueprints, Docker containerization, and zero-downtime healthcheck probes.
