@@ -1,0 +1,23 @@
+# Render Blueprint Specification for SwadLipi AI Menu Translator
+# Deploy to Render with 1-click using this blueprint:
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: swadlipi-menu-translator-ai
+    runtime: node
+    plan: starter
+    region: oregon
+    branch: main
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: GEMINI_API_KEY
+        sync: false
+        # Optional: Add your Gemini API Key in the Render Dashboard for live generative AI responses.
+        # If left blank, SwadLipi automatically uses its built-in expert Indian Culinary AI runtime!

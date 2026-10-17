@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwadLipi | Indian Restaurant Menu AI Translator & Food Concierge</title>
+  <meta name="description" content="AI-powered Indian Restaurant Menu Translator that handles regional dishes, spices, and cultural context better than generic translation tools. Hosted on Render.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍛</text></svg>">
+</head>
+<body>
+
+  <!-- Main 3-Column Desktop Application Container -->
+  <div class="desktop-app-container">
+
+    <!-- ====================================================================
+         COLUMN 1: APP SIDEBAR RAIL (Desktop Navigation)
+         ==================================================================== -->
+    <aside class="app-sidebar">
+      <!-- Brand Section -->
+      <div class="brand-section">
+        <div class="brand-logo-badge">🍛</div>
+        <div class="brand-text-col">
+          <h1 class="brand-name">SwadLipi</h1>
+          <p class="brand-subtitle">Indian Menu AI Concierge</p>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="menu">
+          <span class="icon">📜</span>
+          <span>Our Menu</span>
+        </button>
+        <button class="nav-item open-scanner-btn" data-view="scanner">
+          <span class="icon">📷</span>
+          <span>Scan Menu / OCR</span>
+        </button>
+        <button class="nav-item open-chat-btn" data-view="chat">
+          <span class="icon">👳🏽‍♂️</span>
+          <span>Ask Maharaj AI</span>
+        </button>
+        <button class="nav-item" id="openProfileBtn" data-view="profile">
+          <span class="icon">👤</span>
+          <span>Dietary Profile</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Runtime Info (Render AI Runtime Status) -->
+      <div class="sidebar-footer-card">
+        <div class="runtime-badge">
+          <span class="dot"></span>
+          <span>Render AI Runtime Active</span>
+        </div>
+        <p class="runtime-desc">
+          Contextual Indian culinary intelligence with zero-literal-error decoding engine.
+        </p>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         COLUMN 2: CENTER WORKSPACE (Menu Catalog & Search)
+         ==================================================================== -->
+    <main class="main-workspace">
+      <!-- Workspace Topbar -->
+      <header class="workspace-topbar">
+        <div class="search-box-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="menuSearchInput" placeholder="Search Indian dishes, vernacular names, or ingredients (e.g. Dosa, Biryani, Paneer, Golgappa)..." />
+        </div>
+
+        <div class="topbar-actions">
+          <!-- Target Translation Language -->
+          <div class="lang-selector-btn" title="Target Language">
+            <span>🌐</span>
+            <span id="currentLangDisplay">English (Cultural)</span>
+          </div>
+
+          <!-- Quick Scanner Trigger -->
+          <button class="action-pill-btn open-scanner-btn" title="Scan or Paste Custom Menu">
+            <span>📋</span>
+            <span>Scan Menu</span>
+          </button>
+
+          <!-- Cart / Shortlist Counter -->
+          <div class="cart-counter-btn" id="openCartBtn" title="Shortlisted Dishes">
+            <span>🛒</span>
+            <span class="cart-badge-count" id="cartBadgeCount">0</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Hero Welcome Banner matching Yummies Palette -->
+      <section class="yummies-hero-banner">
+        <div class="hero-banner-content">
+          <h2>Why <span>SwadLipi</span> Beats Generic Translators</h2>
+          <p>
+            Standard translation tools translate <em>"Gulab Jamun"</em> into <em>"Rose Berry"</em> and <em>"Pani Puri"</em> into <em>"Water Bread"</em>. SwadLipi decodes authentic cooking styles, spice levels, regional roots, and dining etiquette.
+          </p>
+          <div class="hero-badges-row">
+            <span class="hero-feature-chip">🌶️ Accurate Spice Meters</span>
+            <span class="hero-feature-chip">🪷 Jain & Halal Verified</span>
+            <span class="hero-feature-chip">🗣️ Native Audio Pronunciation</span>
+            <span class="hero-feature-chip">🚀 Hosted on Render</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Category Filter Tabs (Matching Screen 2 of Yummies Template) -->
+      <nav class="category-tabs-container" id="categoryTabs" aria-label="Menu Categories">
+        <!-- Injected via JavaScript: All, Meals, Sides, Snacks, Desserts, Beverages -->
+      </nav>
+
+      <!-- Regional Filter Chips -->
+      <div class="region-chips-bar" aria-label="Regional Indian Cuisines">
+        <button class="region-chip active" data-region="All">All India</button>
+        <button class="region-chip" data-region="Punjab">Punjab & Delhi</button>
+        <button class="region-chip" data-region="Udupi">Udupi & South</button>
+        <button class="region-chip" data-region="Hyderabad">Awadh & Hyderabad</button>
+        <button class="region-chip" data-region="Street Food">Chaat & Street Food</button>
+      </div>
+
+      <!-- Dishes Grid (Screen 2: Circular Dish Photography, Heart, Price) -->
+      <section class="dishes-grid" id="dishesGrid" aria-label="Dishes Catalog">
+        <!-- Dish cards dynamically populated by app.js -->
+      </section>
+    </main>
+
+    <!-- ====================================================================
+         COLUMN 3: DISH INSPECTOR (Faithful Replication of Screen 3)
+         ==================================================================== -->
+    <aside class="dish-inspector-panel" id="dishInspectorPanel">
+      <!-- Inspector Top Bar -->
+      <div class="inspector-header-bar">
+        <button class="inspector-back-btn" title="Back to menu">
+          <span>←</span>
+        </button>
+        <h3 style="font-family: var(--font-heading); font-size: 16px; font-weight: 700;">Dish Explorer</h3>
+        <div class="inspector-actions">
+          <div class="cart-counter-btn" style="width: 36px; height: 36px;">
+            <span>🛒</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inspector Scrollable Body -->
+      <div class="inspector-content-scroll">
+        <!-- Hero Dish Image with Heart Button -->
+        <div class="hero-dish-image-wrapper">
+          <img id="inspectorHeroImage" src="/images/biryani.jpg" alt="Dish Hero" />
+          <button class="hero-floating-heart" id="inspectorHeroHeart" title="Favorite">🤍</button>
+        </div>
+
+        <!-- Dish Title & Ratings Row -->
+        <div class="dish-title-block">
+          <h2 class="dish-main-title" id="inspectorDishTitle">Hyderabadi Chicken Dum Biryani</h2>
+          
+          <div class="dish-vernacular-audio">
+            <span class="dish-vernacular-text" id="inspectorDishVernacular">हैदराबादी चिकन दम बिरयानी</span>
+            <button class="btn-pronounce-audio" id="btnPronounceAudio" title="Listen to Native Pronunciation">
+              <span>🔊</span>
+              <span>Listen</span>
+            </button>
+          </div>
+
+          <div class="dish-meta-ratings-row">
+            <div class="dish-rating-stars">
+              <span>★</span>
+              <span id="inspectorRatingVal">4.9</span>
+            </div>
+            <span class="dish-review-count" id="inspectorReviewCount">(342 reviews)</span>
+            <span class="dish-region-tag" id="inspectorRegionTag">Awadh & Hyderabad</span>
+          </div>
+        </div>
+
+        <!-- Price & Quantity Stepper (- 1 +) -->
+        <div class="dish-price-stepper-row">
+          <span class="inspector-price-tag" id="inspectorPriceTag">₹380</span>
+          
+          <div class="quantity-stepper-pill">
+            <button class="stepper-btn" id="stepMinusBtn">-</button>
+            <span class="stepper-val" id="stepperQuantityVal">1</span>
+            <button class="stepper-btn" id="stepPlusBtn">+</button>
+          </div>
+        </div>
+
+        <!-- Why Generic Translators Fail Callout -->
+        <div class="generic-vs-ai-card">
+          <div class="generic-vs-header">
+            <span class="generic-vs-title">⚠️ Why Generic Translators Fail</span>
+            <span class="bad-translation-tag">Literal Error</span>
+          </div>
+          <div class="bad-translation-text" id="inspectorBadTranslation">
+            Generic Tool: "Steamed spicy rice with poultry"
+          </div>
+          <p class="smart-translation-text" id="inspectorSmartTranslation">
+            Generic tools label it as 'chicken fried rice', masking its 4-hour sealed dum cooking technique, the saffron floral aroma, and the layered assembly.
+          </p>
+        </div>
+
+        <!-- Description -->
+        <div class="dish-description-block">
+          <h4>Culinary Profile</h4>
+          <p class="dish-description-text" id="inspectorDescription">
+            Royal Nizami delicacy where aged basmati rice and tender chicken marinated in yogurt, fried onions, and spices are sealed with dough and slow-cooked over smoldering coals. <span class="calorie-highlight">(Contains 580 calories)</span>
+          </p>
+        </div>
+
+        <!-- Flavor Profile Meters -->
+        <div class="flavor-profile-section">
+          <div class="flavor-row">
+            <span class="flavor-label">Spiciness 🌶️</span>
+            <div class="flavor-bar-bg"><div class="flavor-bar-fill" id="flavorSpicy" style="width: 75%;"></div></div>
+          </div>
+          <div class="flavor-row">
+            <span class="flavor-label">Tanginess 🍋</span>
+            <div class="flavor-bar-bg"><div class="flavor-bar-fill" id="flavorTangy" style="width: 30%;"></div></div>
+          </div>
+          <div class="flavor-row">
+            <span class="flavor-label">Sweetness 🍯</span>
+            <div class="flavor-bar-bg"><div class="flavor-bar-fill" id="flavorSweet" style="width: 10%;"></div></div>
+          </div>
+          <div class="flavor-row">
+            <span class="flavor-label">Richness 🧈</span>
+            <div class="flavor-bar-bg"><div class="flavor-bar-fill" id="flavorRich" style="width: 85%;"></div></div>
+          </div>
+        </div>
+
+        <!-- Recommended Sides Horizontal Carousel (Screen 3 UI) -->
+        <div class="recommended-sides-section">
+          <h4>Recommended sides</h4>
+          <div class="sides-horizontal-row" id="inspectorSidesRow">
+            <!-- Dynamic side cards -->
+          </div>
+        </div>
+
+        <!-- How to Eat & Etiquette -->
+        <div class="dining-etiquette-box" id="inspectorEtiquette">
+          <strong>Culinary Etiquette:</strong> Traditionally eaten with the fingers of your right hand. Drizzle with Mirchi ka Salan and cold cucumber raita to soothe the spice.
+        </div>
+      </div>
+
+      <!-- Sticky Bottom Action Bar (Screen 3: Total + Add to Cart) -->
+      <footer class="inspector-bottom-bar">
+        <div class="total-summary-col">
+          <span class="total-label">Total</span>
+          <span class="total-amount-val" id="inspectorTotalAmount">₹380</span>
+        </div>
+        <button class="btn-primary-action" id="btnPrimaryOrder">
+          <span>🛒</span>
+          <span>Add to Order</span>
+        </button>
+      </footer>
+    </aside>
+
+  </div>
+
+  <!-- ======================================================================
+       MODAL 1: AUTH & DIETARY PREFERENCES (Replication of Screen 1)
+       ====================================================================== -->
+  <div class="modal-overlay" id="authProfileModal">
+    <div class="auth-profile-modal-card">
+      <button class="modal-close-x" id="closeAuthModalBtn">✕</button>
+      
+      <!-- Top curved header with circular dish badge -->
+      <div class="auth-modal-header-visual">
+        <div class="auth-header-circle-dish">
+          <img src="/images/dosa.jpg" alt="Auth Dish" />
+        </div>
+      </div>
+
+      <!-- Sign In / Sign Up Tabs matching template -->
+      <div class="auth-tabs-row">
+        <span class="auth-tab-link active">Dietary Profile</span>
+        <span class="auth-tab-link">Sign In</span>
+      </div>
+
+      <!-- Dietary Controls Form -->
+      <div class="auth-form-body">
+        <div class="auth-input-group">
+          <label>Diner Name or Alias</label>
+          <input type="text" value="Foodie Explorer" />
+        </div>
+
+        <div class="auth-input-group">
+          <label>Spice Heat Tolerance</label>
+          <select id="userSpiceSelect">
+            <option value="Mild">Mild (Kam Mirchi - Zero/Low Burn)</option>
+            <option value="Medium" selected>Medium (Standard Authentic Heat)</option>
+            <option value="Fiery">Fiery (Teekha Desi Indian Street Heat 🔥)</option>
+          </select>
+        </div>
+
+        <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-top: 4px;">
+          Dietary Restrictions & Allergies
+        </label>
+        <div class="dietary-preferences-grid">
+          <button class="diet-toggle-btn active" data-pref="veg">🟢 Pure Veg</button>
+          <button class="diet-toggle-btn" data-pref="jain">🪷 Jain (No Alliums)</button>
+          <button class="diet-toggle-btn" data-pref="halal">🌙 Halal Only</button>
+          <button class="diet-toggle-btn" data-pref="nuts">🥜 Nut Allergy Alert</button>
+        </div>
+
+        <button class="btn-primary-action" id="saveDietaryPreferencesBtn" style="margin-top: 10px;">
+          Save & Apply to Menu
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODAL 2: MAHARAJ AI FOOD CONCIERGE CHAT
+       ====================================================================== -->
+  <div class="modal-overlay" id="aiChatModal">
+    <div class="ai-agent-modal-card">
+      <div class="ai-agent-header">
+        <div class="ai-agent-profile">
+          <div class="ai-agent-avatar">👳🏽‍♂️</div>
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: 16px; font-weight: 700;">Maharaj AI Concierge</h3>
+            <span style="font-size: 11px; opacity: 0.9;">Render Cloud AI Runtime • Live</span>
+          </div>
+        </div>
+        <button class="modal-close-x" id="closeChatModalBtn">✕</button>
+      </div>
+
+      <div class="ai-chat-messages-container" id="aiChatMessages">
+        <div class="chat-bubble bot">
+          <strong>Namaste!</strong> I am <strong>Maharaj AI</strong>, your authentic Indian culinary guide.<br><br>
+          Ask me about hidden ingredients, spice adjustments, why generic translators fail, or how to pair your meal with authentic regional sides!
+        </div>
+      </div>
+
+      <!-- Quick Suggested Prompts -->
+      <div class="chat-quick-prompts-row">
+        <button class="chat-quick-prompt" data-prompt="Why do generic translation tools fail for Gulab Jamun?">Gulab Jamun vs Rose Berry?</button>
+        <button class="chat-quick-prompt" data-prompt="I cannot eat spicy food, what mild dishes do you recommend?">Mild Dishes Only</button>
+        <button class="chat-quick-prompt" data-prompt="What should I order for a strictly Jain meal?">Jain Options</button>
+        <button class="chat-quick-prompt" data-prompt="What is the proper etiquette to eat with my hands?">Dining Etiquette</button>
+      </div>
+
+      <div class="ai-chat-input-bar">
+        <input type="text" id="aiChatInput" placeholder="Ask Maharaj AI anything about Indian dishes or menus..." />
+        <button id="aiChatSendBtn" title="Send message">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODAL 3: MENU SCANNER & BATCH OCR TRANSLATOR
+       ====================================================================== -->
+  <div class="modal-overlay" id="scannerModal">
+    <div class="scanner-modal-card">
+      <button class="modal-close-x" id="closeScannerModalBtn">✕</button>
+
+      <h2 style="font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: var(--text-main);">
+        Scan or Paste Local Restaurant Menu
+      </h2>
+      <p style="font-size: 13px; color: var(--text-muted);">
+        Paste handwritten blackboard specials, printed dhaba menus, or raw text. SwadLipi will decode every single dish!
+      </p>
+
+      <!-- Quick sample menu load presets -->
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
+        <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); align-self: center;">Try Sample Menus:</span>
+        <button class="sample-menu-preset-btn action-pill-btn" data-preset="dhaba">Punjab Dhaba Menu</button>
+        <button class="sample-menu-preset-btn action-pill-btn" data-preset="udupi">Udupi Tiffin Menu</button>
+        <button class="sample-menu-preset-btn action-pill-btn" data-preset="hyd">Nizami Biryani Menu</button>
+      </div>
+
+      <textarea id="scannerRawText" placeholder="Paste menu lines here (e.g.):&#10;1. Paneer Butter Masala - ₹320&#10;2. Dal Makhani - ₹290&#10;3. Garlic Naan - ₹75&#10;4. Kesar Mango Lassi - ₹150"></textarea>
+
+      <button class="btn-primary-action" id="btnRunMenuScan">
+        <span>⚡</span>
+        <span>Translate & Extract Menu Dishes</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/speech-service.js"></script>
+  <script src="/js/culinary-engine.js"></script>
+  <script src="/js/ai-agent.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
